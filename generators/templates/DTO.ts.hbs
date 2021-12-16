@@ -1,0 +1,13 @@
+import * as yup from 'yup';
+
+export const {{pascalCase (getName name)}}Create = yup.object().shape({
+    // Add fields
+});
+
+export const {{pascalCase (getName name)}}Update = yup.object().shape({
+    // Add fields
+});
+
+export const {{pascalCase (getName name)}}UpdateAndDelete = yup.object().shape({
+    id: yup.number().required(),
+});

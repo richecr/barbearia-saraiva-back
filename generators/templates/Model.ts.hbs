@@ -1,0 +1,30 @@
+import DataTypes, { Sequelize } from 'sequelize';
+
+import GenericModel, { DB } from './GenericModel';
+
+export interface I{{pascalCase (getName name)}} {
+    // TODO: Add the attributes.
+}
+
+class {{pascalCase (getName name)}} extends GenericModel {
+    // TODO: Add the attributes.
+
+    static associate(models: DB) {
+        // TODO: Add the associates.
+        // {{pascalCase (getName name)}}.hasMany(models.Project, { foreignKey: 'client_id', as: 'projects' });
+    }
+
+    static initModel(connection: Sequelize) {
+        {{pascalCase (getName name)}}.init(
+            {
+                // add the same fields in the migrations
+            },
+            {
+                sequelize: connection,
+                tableName: '{{pascalCase (getName name)}}',
+            },
+        );
+    }
+}
+
+export default {{pascalCase (getName name)}};

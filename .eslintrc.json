@@ -1,0 +1,48 @@
+{
+    "env": {
+        "es6": true,
+        "node": true
+    },
+    "extends": ["airbnb-base"],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "plugins": ["@typescript-eslint", "eslint-plugin-import-helpers"],
+    "rules": {
+        "indent": ["error", 4],
+        "quotes": "error",
+        "import/extensions": "never",
+        "class-methods-use-this": "off",
+        "no-param-reassign": "off",
+        "camelcase": "off",
+        "function-paren-newline": ["error", "multiline-arguments"],
+        "no-unused-vars": ["error", { "argsIgnorePattern": "next" }],
+        "no-console": "off",
+        "global-require": "off",
+        "import/no-dynamic-require": "off",
+        "no-nested-ternary": "off",
+        "import/prefer-default-export": "off",
+        "no-unused-expressions": "off",
+        "import-helpers/order-imports": [
+            "warn",
+            {
+                "newlinesBetween": "always",
+                "groups": [
+                    ["/prop-types/", "module"],
+                    "/^@database/",
+                    "/^@models/",
+                    "/^~/controllers/",
+                    "/^@controllers/"
+                ]
+            }
+        ],
+        "implicit-arrow-linebreak": "off"
+    },
+    "settings": {
+        "import/resolver": {
+            "typescript": {}
+        }
+    }
+}

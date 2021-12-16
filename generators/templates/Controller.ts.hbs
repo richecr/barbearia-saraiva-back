@@ -1,0 +1,9 @@
+import {{pascalCase (getName name)}}, { I{{pascalCase (getName name)}} } from '@models/{{pascalCase (getName name)}}';
+
+import BaseController from './BaseController';
+import {{pascalCase (getName name)}}Service from '../services/{{pascalCase (getName name)}}Service';
+
+class {{pascalCase (getName name)}}Controller extends BaseController<{{pascalCase (getName name)}}, I{{pascalCase (getName name)}}> {
+}
+
+export default new {{pascalCase (getName name)}}Controller({{pascalCase (getName name)}}Service);

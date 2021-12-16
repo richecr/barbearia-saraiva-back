@@ -1,0 +1,8 @@
+import {{pascalCase (getName name)}}, { I{{pascalCase (getName name)}} } from '@models/{{pascalCase (getName name)}}';
+
+import BaseRepository from './BaseRepository';
+
+class {{pascalCase (getName name)}}Repository extends BaseRepository<{{pascalCase (getName name)}}, I{{pascalCase (getName name)}}> {
+}
+
+export default new {{pascalCase (getName name)}}Repository({{pascalCase (getName name)}});

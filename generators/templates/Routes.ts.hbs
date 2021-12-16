@@ -1,0 +1,33 @@
+import { Express } from 'express';
+import { validateBodyDTO, validateParamsDTO } from '@middlewares/validateDTO';
+import { {{pascalCase (getName name)}}Create, {{pascalCase (getName name)}}UpdateAndDelete, {{pascalCase (getName name)}}Update } from '@dto/{{pascalCase (getName name)}}DTO';
+
+import {{pascalCase (getName name)}}Controller from '@controllers/{{pascalCase (getName name)}}Controller';
+
+// Add the route in file '_index.ts'
+export default function routes(app: Express) {
+    app.post(
+        '/your_route',
+        validateBodyDTO({{pascalCase (getName name)}}Create),
+        (req, res) => {{pascalCase (getName name)}}Controller.store(req, res),
+    );
+    app.put(
+        '/your_route/:id',
+        validateParamsDTO({{pascalCase (getName name)}}UpdateAndDelete),
+        validateBodyDTO({{pascalCase (getName name)}}Update),
+        (req, res) => {{pascalCase (getName name)}}Controller.update(req, res),
+    );
+    app.get(
+        '/your_route',
+        (req, res) => {{pascalCase (getName name)}}Controller.index(req, res),
+    );
+    app.get(
+        '/your_route/:id',
+        (req, res) => {{pascalCase (getName name)}}Controller.get(req, res),
+    );
+    app.delete(
+        '/your_route/:id',
+        validateParamsDTO({{pascalCase (getName name)}}UpdateAndDelete),
+        (req, res) => {{pascalCase (getName name)}}Controller.delete(req, res),
+    );
+}

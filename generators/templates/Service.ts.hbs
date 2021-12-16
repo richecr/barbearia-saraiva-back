@@ -1,0 +1,10 @@
+import {{pascalCase (getName name)}}Repository from '@repositories/{{pascalCase (getName name)}}Repository';
+
+import {{pascalCase (getName name)}}, { I{{pascalCase (getName name)}} } from '@models/{{pascalCase (getName name)}}';
+
+import BaseService from './BaseService';
+
+class {{pascalCase (getName name)}}Service extends BaseService<{{pascalCase (getName name)}}, I{{pascalCase (getName name)}}> {
+}
+
+export default new {{pascalCase (getName name)}}Service({{pascalCase (getName name)}}Repository);
