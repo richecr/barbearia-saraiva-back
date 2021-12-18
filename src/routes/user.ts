@@ -26,7 +26,7 @@ export default function routes(app: Express) {
         (req, res) => UserController.get(req, res),
     );
     app.delete(
-        '/your_route/:id',
+        '/users/:id',
         validateParamsDTO(UserUpdateAndDelete),
         (req, res) => UserController.delete(req, res),
     );

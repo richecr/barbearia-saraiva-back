@@ -22,6 +22,7 @@
             "@models/*": ["./src/app/models/*"],
             "@dto/*": ["./src/app/dto/*"],
             "@repositories/*": ["./src/app/repository/*"],
+            "@services/*": ["./src/app/services/*"],
             "@middlewares/*": ["./src/app/middlewares/*"],
             "@config/*": ["./src/config/*"],
             "@database/*": ["./src/database/*"]

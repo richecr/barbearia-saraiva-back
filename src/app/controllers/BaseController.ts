@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import Sequelize from 'sequelize';
 
-import BaseService from '../services/BaseService';
+import BaseError from '../errors/BaseError';
+import BaseService from '@services/BaseService';
 
-// eslint-disable-next-line no-use-before-define
 class BaseController<T extends Sequelize.Model<T> & K, K> {
     public service: BaseService<T, K>;
 
@@ -17,8 +17,8 @@ class BaseController<T extends Sequelize.Model<T> & K, K> {
             return res.status(201).json(object);
         } catch (error) {
             return res
-                .status(error.statusCode || 400)
-                .json({ message: error.message });
+                .status((error as BaseError).statusCode || 400)
+                .json({ message: (error as BaseError).message });
         }
     }
 
@@ -30,8 +30,8 @@ class BaseController<T extends Sequelize.Model<T> & K, K> {
             return res.status(200).json(objects);
         } catch (error) {
             return res
-                .status(error.statusCode || 400)
-                .json({ message: error.message });
+                .status((error as BaseError).statusCode || 400)
+                .json({ message: (error as BaseError).message });
         }
     }
 
@@ -42,8 +42,8 @@ class BaseController<T extends Sequelize.Model<T> & K, K> {
         } catch (error) {
             // TODO: Error vai informar o status code.
             return res
-                .status(error.statusCode)
-                .json({ message: error.message });
+                .status((error as BaseError).statusCode)
+                .json({ message: (error as BaseError).message });
         }
     }
 
@@ -54,8 +54,8 @@ class BaseController<T extends Sequelize.Model<T> & K, K> {
         } catch (error) {
             // TODO: Error vai informar o status code.
             return res
-                .status(error.statusCode)
-                .json({ message: error.message });
+                .status((error as BaseError).statusCode)
+                .json({ message: (error as BaseError).message });
         }
     }
 
@@ -69,8 +69,8 @@ class BaseController<T extends Sequelize.Model<T> & K, K> {
         } catch (error) {
             // TODO: Error vai informar o status code.
             return res
-                .status(error.statusCode)
-                .json({ message: error.message });
+                .status((error as BaseError).statusCode)
+                .json({ message: (error as BaseError).message });
         }
     }
 }
