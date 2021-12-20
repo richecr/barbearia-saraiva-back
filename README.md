@@ -1,4 +1,4 @@
-# Arquinator
+# Barbearia Saraiva
 
 ### Docker - Iniciar o Postgres:
 
