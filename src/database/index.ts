@@ -5,7 +5,7 @@ import path from 'path';
 
 import { DB } from '@models/GenericModel';
 
-import { development, production, test } from '../config/database.json';
+import { development, production, test } from '../config/database.js';
 
 const basename = path.resolve(__dirname, '../app/models/');
 const db: DB = {};
@@ -13,6 +13,7 @@ const db: DB = {};
 const variables_db = process.env.NODE_ENV === 'test'
     ? test
     : process.env.NODE_ENV === 'dev' ? development : production;
+
 
 class Database {
     public connection: Sequelize;

@@ -6,7 +6,7 @@
     "author": "Evlav Tech",
     "private": true,
     "scripts": {
-        "dev": "nodemon --watch 'src/**/*.ts' -r tsconfig-paths/register --exec ts-node src/index.ts",
+        "dev": "nodemon src/index.ts",
         "build": "yarn clean && tsc",
         "start": "node dist/index.js",
         "migrate": "yarn sequelize db:migrate --env development",
@@ -31,7 +31,7 @@
         "eslint-import-resolver-typescript": "^2.3.0",
         "eslint-plugin-import": "^2.21.2",
         "jest": "^26.6.3",
-        "nodemon": "^2.0.6",
+        "nodemon": "^2.0.15",
         "plop": "^2.7.4",
         "sequelize-cli": "^6.2.0",
         "supertest": "^6.1.3",
