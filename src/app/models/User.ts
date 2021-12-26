@@ -29,7 +29,7 @@ class User extends GenericModel {
     }
 
     static associate(models: DB) {
-        // User.belongsToMany(models.Permission, { through: 'UserPermissions' });
+        User.belongsToMany(models.Permission, { through: 'UserPermissions' });
     }
 
     static initModel(connection: Sequelize) {
