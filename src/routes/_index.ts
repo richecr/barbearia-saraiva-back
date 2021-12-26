@@ -1,7 +1,7 @@
 import { Express, Request, Response } from 'express';
 
 
-// import UsersRoutes from './user';
+import UsersRoutes from './user';
 
 export default function initRoutes(app: Express) {
     app.get('/api', (req: Request, res: Response) =>
@@ -11,7 +11,7 @@ export default function initRoutes(app: Express) {
     );
 
     // routes
-    // UsersRoutes(app);
+    UsersRoutes(app);
 
     app.all('*', (req: Request, res: Response) =>
         res.status(404).json({ message: 'Route not found!' }),
