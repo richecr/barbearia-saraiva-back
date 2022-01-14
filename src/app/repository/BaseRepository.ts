@@ -38,6 +38,7 @@ class BaseRepository<T extends Sequelize.Model<T> & K, K> {
     ): Promise<[number, any[]]> {
         const objectUpdated = await this.model.update(attributes, {
             where: { id },
+            individualHooks: true
         });
         return objectUpdated;
     }

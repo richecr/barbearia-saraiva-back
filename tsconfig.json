@@ -15,7 +15,7 @@
         "skipLibCheck": true /* Skip type checking of declaration files. */,
         "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */,
         "baseUrl": ".",
-        "typeRoots": ["./src/@types"],
+        "types": ["jest", "node"],
         "paths": {
             "@test/*": ["./__tests__/*"],
             "@controllers/*": ["./src/app/controllers/*"],

@@ -1,14 +1,14 @@
 import { Request, Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
-import PermissionService from '../services/PermissionService';
 import auth from '@config/auth';
 import BaseError from '../errors/BaseError';
-import UserPermissionService from '../services/UserPermissionService';
+import PermissionService from '@services/PermissionService';
+import UserPermissionService from '@services/UserPermissionService';
 
 interface TokenPayload {
-    iat: number;
-    exp: number;
-    sub: number;
+    iat?: number | undefined;
+    exp?: number | undefined;
+    sub?: number | undefined;
 }
 
 export default function ensureAuth(permissionName: string) {
@@ -29,8 +29,8 @@ export default function ensureAuth(permissionName: string) {
             );
             const checkUserPermission = await UserPermissionService.repository.findByFilters(
                 {
-                    userId: Number(decoded.sub),
-                    permissionId: id,
+                    user_id: Number(decoded.sub),
+                    permission_id: id,
                 },
             );
 

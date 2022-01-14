@@ -1,4 +1,4 @@
-module.exports = {
+const config = {
     preset: 'ts-jest',
     testEnvironment: 'node',
     moduleNameMapper: {
@@ -13,3 +13,5 @@ module.exports = {
         '@database/(.*)': '<rootDir>/src/database/$1',
     },
 };
+
+export default config;
