@@ -16,7 +16,7 @@ module.exports = {
         const Op = Sequelize.Op;
         return queryInterface.bulkDelete(
             'Permissions',
-            { name: { [Op.eq]: ['ADMIN'] } },
+            { name: { [Op.eq]: 'ADMIN' } },
             {},
         );
     },
