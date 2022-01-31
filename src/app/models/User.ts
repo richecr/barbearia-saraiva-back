@@ -13,6 +13,13 @@ export interface IUser {
     notification_whatsapp: boolean;
 }
 
+export interface IUserSession {
+    id: number;
+    name: string;
+    email: string;
+    password_hash: string;
+}
+
 class User extends GenericModel {
     public id!: number;
     public name!: string;
