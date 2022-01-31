@@ -1,10 +1,11 @@
 module.exports = {
     up: async (queryInterface, Sequelize) =>
         queryInterface.bulkInsert(
-            'Permissions',
+            'UserPermissions',
             [
                 {
-                    name: 'ADMIN',
+                    user_id: 1,
+                    permission_id: 1,
                     created_at: new Date(),
                     updated_at: new Date(),
                 },
@@ -15,8 +16,8 @@ module.exports = {
     down: (queryInterface, Sequelize) => {
         const Op = Sequelize.Op;
         return queryInterface.bulkDelete(
-            'Permissions',
-            { name: { [Op.eq]: 'ADMIN' } },
+            'UserPermissions',
+            { user_id: { [Op.eq]: 1 } },
             {},
         );
     },
