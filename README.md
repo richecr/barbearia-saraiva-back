@@ -38,3 +38,9 @@ O comando acima desfaz a última migrate feita. Para desfazer todas as migrates:
 ```sh
 $ yarn migrate:undo:all
 ```
+
+### Criando uma seed:
+
+```sh
+$ yarn sequelize seed:generate --name add-user-admin
+```
