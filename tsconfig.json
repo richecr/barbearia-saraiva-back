@@ -28,5 +28,6 @@
             "@database/*": ["./src/database/*"]
         }
     },
-    "exclude": ["node_modules", "lib", "__tests__"]
+    "exclude": ["node_modules", "lib", "__tests__"],
+    "include": ["**/*.spec.ts", "**/*.d.ts"]
 }
