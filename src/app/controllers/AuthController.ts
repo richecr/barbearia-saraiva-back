@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 
 import AuthService from '../services/AuthService';
 
-interface IToken{
+interface IToken {
     email: string;
     token: string;
 }

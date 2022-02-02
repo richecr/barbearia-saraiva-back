@@ -9,7 +9,6 @@ import ensureAuth from '@middlewares/ensureAuth';
 export default function routes(app: Express) {
     app.post(
         '/users',
-        ensureAuth('ADMIN'),
         validateBodyDTO(UserCreate),
         (req, res) => UserController.store(req, res),
     );
