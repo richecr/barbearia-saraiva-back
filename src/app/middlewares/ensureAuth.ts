@@ -12,7 +12,7 @@ interface TokenPayload {
 }
 
 export default function ensureAuth(permissionName: string) {
-    return async (request: Request, response: Response, next: NextFunction) => {
+    return async (request: any, response: Response, next: NextFunction) => {
         const authHeader = request.headers.authorization;
 
         if (!authHeader) {
