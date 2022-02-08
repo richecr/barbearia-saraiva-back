@@ -11,6 +11,7 @@ export interface IUser {
     telephone: string;
     notification_email: boolean;
     notification_whatsapp: boolean;
+    checkPassword(password: string): Promise<boolean>;
 }
 
 export interface IUserSession {
@@ -18,6 +19,7 @@ export interface IUserSession {
     name: string;
     email: string;
     password_hash: string;
+    checkPassword(password: string): Promise<boolean>;
 }
 
 class User extends GenericModel {
@@ -31,7 +33,7 @@ class User extends GenericModel {
     public notification_email!: boolean;
     public notification_whatsapp!: boolean;
 
-    async checkPassword(password: string) {
+    public async checkPassword(password: string) {
         return await bcrypt.compare(password, this.password_hash);
     }
 
