@@ -23,12 +23,7 @@ class AuthService {
             throw new BaseError(`Object with email: ${email} not found`, 404);
         }
 
-        const passwordMatched = await bcryptjs.compare(
-            password,
-            user.password_hash,
-        );
-
-        if (!passwordMatched) {
+        if (!(await user.checkPassword(password))) {
             throw new BaseError('Invalid Password', 401);
         }
 

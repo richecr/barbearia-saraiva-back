@@ -14,12 +14,12 @@ class AuthController {
         this.service = service;
     }
 
-    async createToken(req:Request, res: Response): Promise<Response<IToken>> {
+    async createToken(req: Request, res: Response): Promise<Response<IToken>> {
         try {
             const tokenData = await this.service.createSession(req.body);
-            return res.status(202).json(tokenData);
+            return res.status(201).json(tokenData);
         } catch (error) {
-            return res.status(401).json({ message: 'email ou senha errados' });
+            return res.status(401).json({ message: 'Email e/ou senha incorretos' });
         }
     }
 }
