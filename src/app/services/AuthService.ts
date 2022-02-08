@@ -1,4 +1,3 @@
-import bcryptjs from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import auth from '@config/auth';
 import UserSessionRepository from '@repositories/UserSessionRepository';
