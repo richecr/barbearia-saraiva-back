@@ -3,6 +3,8 @@ import auth from '@config/auth';
 import UserSessionRepository from '@repositories/UserSessionRepository';
 
 import BaseError from '../errors/BaseError';
+import UserPermissionService from './UserPermissionService';
+import PermissionService from './PermissionService';
 
 export interface ISession {
     email: string;
@@ -32,6 +34,18 @@ class AuthService {
         });
 
         return { email: user.email, token };
+    }
+
+    async userIsAdmin(id_user: number | undefined): Promise<boolean> {
+        const [{ id }] = await PermissionService.repository.findByFilters({ name: 'ADMIN' });
+        const isAdmin = await UserPermissionService.repository.findByFilters(
+            {
+                user_id: id_user,
+                permission_id: id,
+            },
+        );
+
+        return isAdmin.length > 0;
     }
 }
 
