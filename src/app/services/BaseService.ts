@@ -44,13 +44,13 @@ class BaseService<T extends Sequelize.Model<T> & K, K> {
     }
 
     async update(id: number, bodyUpdated: any): Promise<K | BaseError | null> {
-        const hasUpdated = await this.repository.update(id, bodyUpdated);
-        if (!hasUpdated[0]) {
+        const modelInstance = await this.repository.findById(id);
+        if (!modelInstance) {
             throw new BaseError('Id not found!', 404);
         }
-
-        const object = await this.repository.findById(id);
-        return object;
+        modelInstance.set(bodyUpdated);
+        modelInstance.save();
+        return modelInstance;
     }
 }
 

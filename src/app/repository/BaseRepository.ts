@@ -27,7 +27,7 @@ class BaseRepository<T extends Sequelize.Model<T> & K, K> {
         return objects;
     }
 
-    async findById(id: number): Promise<K | null> {
+    async findById(id: number): Promise<T | null> {
         const object = await this.model.findByPk<T>(id);
         return object;
     }
