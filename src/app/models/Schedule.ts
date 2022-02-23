@@ -1,6 +1,6 @@
 import DataTypes, { Sequelize } from 'sequelize';
 
-import GenericModel from './GenericModel';
+import GenericModel, { DB } from './GenericModel';
 
 export interface ISchedule {
     id: number;
@@ -14,6 +14,12 @@ class Schedule extends GenericModel {
     public barber_name!: string;
     public barber_telephone!: string;
     public email!: string;
+
+    static associate(models: DB) {
+        Schedule.hasMany(models.Event, {
+            foreignKey: 'schedule_id', as: 'Events'
+        });
+    }
 
     static initModel(connection: Sequelize) {
         Schedule.init(

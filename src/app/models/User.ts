@@ -39,6 +39,7 @@ class User extends GenericModel {
 
     static associate(models: DB) {
         User.belongsToMany(models.Permission, { through: 'UserPermissions' });
+        User.hasMany(models.Event, { foreignKey: 'user_id', as: 'Events' });
     }
 
     static initModel(connection: Sequelize) {
