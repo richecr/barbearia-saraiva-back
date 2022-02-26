@@ -80,7 +80,7 @@ class Event extends GenericModel {
             },
             {
                 sequelize: connection,
-                tableName: 'Event',
+                tableName: 'Events',
             },
         );
     }

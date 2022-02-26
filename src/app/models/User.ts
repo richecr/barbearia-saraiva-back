@@ -2,6 +2,7 @@ import DataTypes, { Sequelize } from 'sequelize';
 import * as bcrypt from 'bcrypt';
 
 import GenericModel, { DB } from './GenericModel';
+import Event from './Event';
 
 export interface IUser {
     id: number;
@@ -11,6 +12,7 @@ export interface IUser {
     telephone: string;
     notification_email: boolean;
     notification_whatsapp: boolean;
+    events: Event[];
     checkPassword(password: string): Promise<boolean>;
 }
 
@@ -32,6 +34,7 @@ class User extends GenericModel {
     public password_hash!: string;
     public notification_email!: boolean;
     public notification_whatsapp!: boolean;
+    public events!: Event[];
 
     public async checkPassword(password: string) {
         return await bcrypt.compare(password, this.password_hash);
@@ -39,7 +42,7 @@ class User extends GenericModel {
 
     static associate(models: DB) {
         User.belongsToMany(models.Permission, { through: 'UserPermissions' });
-        User.hasMany(models.Event, { foreignKey: 'user_id', as: 'Events' });
+        User.hasMany(models.Event, { foreignKey: 'user_id', as: 'events' });
     }
 
     static initModel(connection: Sequelize) {
