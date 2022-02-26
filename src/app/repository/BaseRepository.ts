@@ -13,17 +13,17 @@ class BaseRepository<T extends Sequelize.Model<T> & K, K> {
     }
 
     async findAll(): Promise<K[]> {
-        const objects = this.model.findAll<T>();
+        const objects = await this.model.findAll<T>();
         return objects;
     }
 
     async findByFilters(where: WhereOptions<T> = {}): Promise<K[]> {
-        const objects = this.model.findAll<T>({ where });
+        const objects = await this.model.findAll<T>({ where });
         return objects;
     }
 
     async find(filters: FindOptions<T> = {}): Promise<K[]> {
-        const objects = this.model.findAll<T>(filters);
+        const objects = await this.model.findAll<T>(filters);
         return objects;
     }
 
