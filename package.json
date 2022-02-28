@@ -6,7 +6,7 @@
     "author": "Evlav Tech",
     "private": true,
     "scripts": {
-        "dev": "nodemon -r tsconfig-paths/register src/index.ts",
+        "dev": "nodemon -r tsconfig-paths/register --files src/index.ts",
         "build": "yarn clean && tsc",
         "start": "node dist/index.js",
         "migrate": "yarn sequelize db:migrate --env development",
