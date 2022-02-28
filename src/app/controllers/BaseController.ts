@@ -35,7 +35,7 @@ class BaseController<T extends Sequelize.Model<T> & K, K> {
         }
     }
 
-    async get(req: Request, res: Response): Promise<Response<K[]>> {
+    async get(req: Request, res: Response): Promise<Response<K>> {
         try {
             const object = await this.service.findById(Number(req.params.id));
             return res.status(200).json(object);
