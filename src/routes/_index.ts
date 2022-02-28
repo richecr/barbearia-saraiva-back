@@ -5,6 +5,7 @@ import UsersRoutes from './user';
 import AuthRoutes from './auth';
 import ScheduleRoutes from './schedule';
 import EventRoutes from './event';
+import EventTimeRoutes from './eventTime';
 
 export default function initRoutes(app: Express) {
     app.get('/api', (req: Request, res: Response) =>
@@ -18,6 +19,7 @@ export default function initRoutes(app: Express) {
     AuthRoutes(app);
     ScheduleRoutes(app);
     EventRoutes(app);
+    EventTimeRoutes(app);
 
     app.all('*', (req: Request, res: Response) =>
         res.status(404).json({ message: 'Route not found!' }),

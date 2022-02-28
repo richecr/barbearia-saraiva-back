@@ -1,4 +1,4 @@
-import { Response, NextFunction } from 'express';
+import { Response, NextFunction, Request } from 'express';
 import { verify } from 'jsonwebtoken';
 import auth from '@config/auth';
 import BaseError from '../errors/BaseError';
@@ -26,7 +26,7 @@ export async function isAdmin(request: any, response: Response) {
 }
 
 export function validateToken() {
-    return async (request: any, response: Response, next: NextFunction) => {
+    return async (request: Request, response: Response, next: NextFunction) => {
         try {
             const authHeader = request.headers.authorization;
             if (!authHeader) {

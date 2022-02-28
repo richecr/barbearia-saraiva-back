@@ -1,4 +1,4 @@
-import { Express } from 'express';
+import { Express, Request } from 'express';
 import { validateBodyDTO, validateParamsDTO } from '@middlewares/validateDTO';
 import { EventCreate, EventUpdateAndDelete, EventUpdate } from '@dto/EventDTO';
 
@@ -11,7 +11,7 @@ export default function routes(app: Express) {
         '/events',
         validateToken(),
         validateBodyDTO(EventCreate),
-        (req, res) => EventController.store(req, res),
+        (req: Request, res) => EventController.store(req, res),
     );
     app.put(
         '/events/:id',
