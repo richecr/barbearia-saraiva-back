@@ -46,12 +46,26 @@ class EventService extends BaseService<Event, IEvent> {
             }
         });
 
-        if (!error) {
-            const event = await this.repository.create(body);
-            return event;
+        if (error) {
+            throw new BaseError("Horário ocupado.", 409);
         }
 
-        throw new BaseError("Horário ocupado!", 409);
+        const event = await this.repository.create(body);
+        return event;
+    }
+
+    async update(id: number, bodyUpdated: any): Promise<IEvent | BaseError | null> {
+        const modelInstance = await this.repository.findById(id);
+        if (!modelInstance) {
+            throw new BaseError('Id not found!', 404);
+        }
+        if (modelInstance?.user_id != bodyUpdated.user_id) {
+            throw new BaseError('Unauthorized', 401);
+        }
+
+        modelInstance.set(bodyUpdated);
+        modelInstance.save();
+        return modelInstance;
     }
 }
 

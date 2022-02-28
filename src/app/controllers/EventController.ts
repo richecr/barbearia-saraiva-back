@@ -40,6 +40,52 @@ class EventController extends BaseController<Event, IEvent> {
         return event?.duration;
     }
 
+    async update(req: Request, res: Response): Promise<Response<IEvent>> {
+        try {
+            const body = {...req.body, user_id: req.user.id};
+            const event = await this.service.update(
+                Number(req.params.id),
+                body,
+            );
+            return res.status(200).json(event);
+        } catch (error) {
+            return res
+                .status((error as BaseError).statusCode)
+                .json({ message: (error as BaseError).message });
+        }
+    }
+
+    async get(req: Request, res: Response): Promise<Response<IEvent>> {
+        try {
+            const event = await this.service.findById(Number(req.params.id));
+            if (event?.user_id != req.user.id) {
+                throw new BaseError("Unauthorized", 401);
+            }
+
+            return res.status(200).json(event);
+        } catch (error) {
+            return res
+                .status((error as BaseError).statusCode)
+                .json({ message: (error as BaseError).message });
+        }
+    }
+
+    async delete(req: Request, res: Response): Promise<Response<IEvent>> {
+        try {
+            const event = await this.service.findById(Number(req.params.id));
+            if (event?.user_id != req.user.id) {
+                throw new BaseError("Unauthorized", 401);
+            }
+
+            const eventDelete = await this.service.delete(Number(req.params.id));
+            return res.status(200).json(eventDelete);
+        } catch (error) {
+            return res
+                .status((error as BaseError).statusCode)
+                .json({ message: (error as BaseError).message });
+        }
+    }
+
 }
 
 export default new EventController(EventService);
