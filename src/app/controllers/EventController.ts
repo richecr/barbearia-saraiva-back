@@ -16,6 +16,8 @@ class EventController extends BaseController<Event, IEvent> {
 
     private authService = AuthService
 
+    private eventService = EventService
+
     async store(req: Request, res: Response) {
         try {
             const body = await this.makeBodyCreateAndUpdate(
@@ -33,11 +35,12 @@ class EventController extends BaseController<Event, IEvent> {
     async update(req: Request, res: Response): Promise<Response<IEvent>> {
         try {
             const body = await this.makeBodyCreateAndUpdate(
-                { ...req.body, user_id: req.user.id }
+                { ...req.body, id: req.params.id }
             );
-            const event = await this.service.update(
+            const event = await this.eventService.updateEvent(
                 Number(req.params.id),
                 body,
+                req.user.id,
             );
             return res.status(200).json(event);
         } catch (error) {
@@ -75,7 +78,8 @@ class EventController extends BaseController<Event, IEvent> {
     async get(req: Request, res: Response): Promise<Response<IEvent>> {
         try {
             const event = await this.service.findById(Number(req.params.id));
-            if (event?.user_id != req.user.id) {
+            const isUserAdmin = await this.authService.userIsAdmin(req.user.id);
+            if (!isUserAdmin && event?.user_id != req.user.id) {
                 throw new BaseError("Unauthorized", 401);
             }
 
@@ -90,7 +94,8 @@ class EventController extends BaseController<Event, IEvent> {
     async delete(req: Request, res: Response): Promise<Response<IEvent>> {
         try {
             const event = await this.service.findById(Number(req.params.id));
-            if (event?.user_id != req.user.id) {
+            const isUserAdmin = await this.authService.userIsAdmin(req.user.id);
+            if (!isUserAdmin && event?.user_id != req.user.id) {
                 throw new BaseError("Unauthorized", 401);
             }
 

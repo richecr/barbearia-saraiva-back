@@ -5,9 +5,12 @@ import BaseService from './BaseService';
 import BaseError from '../errors/BaseError';
 import Event, { IEvent } from '@models/Event';
 import EventRepository from '@repositories/EventRepository';
+import AuthService from './AuthService';
 
 
 class EventService extends BaseService<Event, IEvent> {
+
+    private authService = AuthService
 
     async validation(body: any, update: boolean = false) {
         let filters: any = {
@@ -68,13 +71,14 @@ class EventService extends BaseService<Event, IEvent> {
         }
     }
 
-    async update(id: number, bodyUpdated: any): Promise<IEvent | BaseError | null> {
+    async updateEvent(id: number, bodyUpdated: any, userId: number | undefined): Promise<IEvent | BaseError | null> {
         const modelInstance = await this.repository.findById(id);
         if (!modelInstance) {
             throw new BaseError('Id not found!', 404);
         }
-        if (modelInstance?.user_id != bodyUpdated.user_id) {
-            throw new BaseError('Unauthorized', 401);
+        const isUserAdmin = await this.authService.userIsAdmin(userId);
+        if (!isUserAdmin && modelInstance?.user_id != userId) {
+            throw new BaseError("Unauthorized", 401);
         }
 
         const error = await this.validation(bodyUpdated, true);
@@ -85,7 +89,6 @@ class EventService extends BaseService<Event, IEvent> {
             modelInstance.save();
             return modelInstance;
         }
-
     }
 }
 
