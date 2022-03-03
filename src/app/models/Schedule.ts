@@ -17,7 +17,7 @@ class Schedule extends GenericModel {
 
     static associate(models: DB) {
         Schedule.hasMany(models.Event, {
-            foreignKey: 'schedule_id', as: 'Events'
+            foreignKey: 'schedule_id', as: 'events'
         });
     }
 

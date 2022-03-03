@@ -24,11 +24,11 @@ class Event extends GenericModel {
     static associate(models: DB) {
         Event.belongsTo(models.User, {
             foreignKey: 'user_id',
-            as: 'Users'
+            as: 'user'
         });
         Event.belongsTo(models.Schedule, {
             foreignKey: 'schedule_id',
-            as: 'Schedules'
+            as: 'schedule'
         });
     }
 

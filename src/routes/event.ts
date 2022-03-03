@@ -22,7 +22,7 @@ export default function routes(app: Express) {
     );
     app.get(
         '/events',
-        ensureAuth('ADMIN'),
+        validateToken(),
         (req, res) => EventController.index(req, res),
     );
     app.get(

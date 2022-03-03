@@ -9,16 +9,25 @@ import EventRepository from '@repositories/EventRepository';
 
 class EventService extends BaseService<Event, IEvent> {
 
-    async create(body: any): Promise<IEvent | BaseError> {
-        const events = await this.repository.findByFilters({
-            schedule_id: body.schedule_id,
+    async validation(body: any, update: boolean = false) {
+        let filters: any = {
             date_hour_start: {
                 [Op.between]: [
                     body.dataWrapper.startOf("day").format(),
                     body.dataWrapper.endOf("day").format()
                 ]
             },
-        });
+        };
+        if (update) {
+            filters = {
+                ...filters,
+                id: {
+                    [Op.not]: body.id
+                }
+            }
+        }
+
+        const events = await this.repository.findByFilters(filters);
 
         let error = false;
         events.map((apt) => {
@@ -46,12 +55,17 @@ class EventService extends BaseService<Event, IEvent> {
             }
         });
 
+        return error;
+    }
+
+    async create(body: any): Promise<IEvent | BaseError> {
+        const error = await this.validation(body);
         if (error) {
             throw new BaseError("Horário ocupado.", 409);
+        } else {
+            const event = await this.repository.create(body);
+            return event;
         }
-
-        const event = await this.repository.create(body);
-        return event;
     }
 
     async update(id: number, bodyUpdated: any): Promise<IEvent | BaseError | null> {
@@ -63,9 +77,15 @@ class EventService extends BaseService<Event, IEvent> {
             throw new BaseError('Unauthorized', 401);
         }
 
-        modelInstance.set(bodyUpdated);
-        modelInstance.save();
-        return modelInstance;
+        const error = await this.validation(bodyUpdated, true);
+        if (error) {
+            throw new BaseError("Horário ocupado.", 409);
+        } else {
+            modelInstance.set(bodyUpdated);
+            modelInstance.save();
+            return modelInstance;
+        }
+
     }
 }
 

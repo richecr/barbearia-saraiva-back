@@ -6,22 +6,21 @@ import BaseController from './BaseController';
 import Event, { IEvent } from '@models/Event';
 import BaseError from '../errors/BaseError';
 import EventTimeService from '@services/EventTimeService';
+import Schedule from '@models/Schedule';
+import User from '@models/User';
+import AuthService from '@services/AuthService';
 
 class EventController extends BaseController<Event, IEvent> {
 
     private eventTimeService = EventTimeService
 
+    private authService = AuthService
+
     async store(req: Request, res: Response) {
         try {
-            let body = req.body;
-            const user_id = req.user.id;
-
-            const duration_service = await this.setDuration(body.type_service);
-            const date_hour_end = moment(body.date_hour_start).add(duration_service, "minutes");
-            const day = new Date(body.date_hour_start);
-            const dataWrapper = moment(day, 'YYYY-MM-DD HH:mm:ss +00:00').utcOffset("+0000");
-
-            body = { ...body, duration_service, date_hour_end, dataWrapper, user_id };
+            const body = await this.makeBodyCreateAndUpdate(
+                { ...req.body, user_id: req.user.id }
+            );
             const object = await this.service.create(body);
             return res.status(201).json(object);
         } catch (error) {
@@ -31,18 +30,11 @@ class EventController extends BaseController<Event, IEvent> {
         }
     }
 
-    public async setDuration(typeService: string) {
-        const event = await this.eventTimeService.findByName(typeService);
-        if (!event) {
-            throw new BaseError("Tipo de Serviço indisponível.", 400);
-        }
-
-        return event?.duration;
-    }
-
     async update(req: Request, res: Response): Promise<Response<IEvent>> {
         try {
-            const body = {...req.body, user_id: req.user.id};
+            const body = await this.makeBodyCreateAndUpdate(
+                { ...req.body, user_id: req.user.id }
+            );
             const event = await this.service.update(
                 Number(req.params.id),
                 body,
@@ -53,6 +45,31 @@ class EventController extends BaseController<Event, IEvent> {
                 .status((error as BaseError).statusCode)
                 .json({ message: (error as BaseError).message });
         }
+    }
+
+    public async makeBodyCreateAndUpdate(body: any) {
+        const event_time = await this.getEventTime(body.type_service);
+        const duration_service = event_time.duration;
+        const date_hour_end = moment(body.date_hour_start).add(duration_service, "minutes");
+        const day = new Date(body.date_hour_start);
+        const dataWrapper = moment(day, 'YYYY-MM-DD HH:mm:ss +00:00').utcOffset("+0000");
+
+        return { 
+            ...body,
+            type_service: event_time.event_name,
+            duration_service,
+            date_hour_end,
+            dataWrapper
+        };
+    }
+
+    public async getEventTime(serviceId: number) {
+        const event = await this.eventTimeService.findById(serviceId);
+        if (!event) {
+            throw new BaseError("Tipo de Serviço indisponível.", 400);
+        }
+
+        return event;
     }
 
     async get(req: Request, res: Response): Promise<Response<IEvent>> {
@@ -86,6 +103,27 @@ class EventController extends BaseController<Event, IEvent> {
         }
     }
 
+    async index(req: Request, res: Response): Promise<Response<IEvent[]>> {
+        try {
+            const isUserAdmin = await this.authService.userIsAdmin(req.user.id);
+            let where = {};
+            if (!isUserAdmin) {
+                where = { user_id: req.user.id };
+            }
+            const events = await this.service.find({
+                where,
+                include: [
+                    { model: Schedule, as: 'schedule'},
+                    { model: User, as: 'user'}
+                ]
+            });
+            return res.status(200).json(events);
+        } catch (error) {
+            return res
+                .status((error as BaseError).statusCode || 400)
+                .json({ message: (error as BaseError).message });
+        }
+    }
 }
 
 export default new EventController(EventService);
