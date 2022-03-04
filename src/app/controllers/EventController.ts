@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { Op } from 'sequelize';
 import { Request, Response } from 'express';
 
 import EventService from '../services/EventService';
@@ -115,6 +116,22 @@ class EventController extends BaseController<Event, IEvent> {
             if (!isUserAdmin) {
                 where = { user_id: req.user.id };
             }
+            if (req.query.dt_start) {
+                const date = req.query.dt_start as string;
+                const dt_start = new Date(date);
+                const dt_moment = moment(dt_start, 'YYYY-MM-DD').utcOffset("+0000");
+                console.log(dt_moment);
+                where = {
+                    ...where,
+                    date_hour_start: {
+                        [Op.between]: [
+                            dt_moment.startOf('day').toDate(),
+                            dt_moment.endOf('day').toDate()
+                        ],
+                    }
+                };
+            }
+
             const events = await this.service.find({
                 where,
                 include: [
