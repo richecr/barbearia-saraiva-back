@@ -120,7 +120,6 @@ class EventController extends BaseController<Event, IEvent> {
                 const date = req.query.dt_start as string;
                 const dt_start = new Date(date);
                 const dt_moment = moment(dt_start, 'YYYY-MM-DD').utcOffset("+0000");
-                console.log(dt_moment);
                 where = {
                     ...where,
                     date_hour_start: {
@@ -137,7 +136,8 @@ class EventController extends BaseController<Event, IEvent> {
                 include: [
                     { model: Schedule, as: 'schedule'},
                     { model: User, as: 'user'}
-                ]
+                ],
+                order: [['date_hour_start', 'ASC']]
             });
             return res.status(200).json(events);
         } catch (error) {
