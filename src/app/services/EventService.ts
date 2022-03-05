@@ -56,6 +56,12 @@ class EventService extends BaseService<Event, IEvent> {
             if (body.date_hour_end.isSame(moment(apt.date_hour_end))) {
                 error = true;
             }
+
+            if (moment(body.date_hour_start).isBefore(apt.date_hour_start)
+                && moment(body.date_hour_end).isAfter(moment(apt.date_hour_end))
+                ) {
+                error = true;
+            }
         });
 
         return error;
