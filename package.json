@@ -6,7 +6,7 @@
     "author": "Evlav Tech",
     "private": true,
     "scripts": {
-        "dev": "nodemon -r tsconfig-paths/register src/index.ts",
+        "dev": "nodemon -r tsconfig-paths/register --files src/index.ts",
         "build": "yarn clean && tsc",
         "start": "node dist/index.js",
         "migrate": "yarn sequelize db:migrate --env development",
@@ -54,6 +54,7 @@
         "eslint-plugin-import-helpers": "^1.1.0",
         "express": "^4.17.1",
         "jsonwebtoken": "^8.5.1",
+        "moment": "^2.29.1",
         "pg": "^8.4.1",
         "pg-hstore": "^2.3.3",
         "sequelize": "^6.3.5",

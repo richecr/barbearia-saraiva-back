@@ -4,6 +4,7 @@ import { ScheduleCreate, ScheduleUpdateAndDelete, ScheduleUpdate } from '@dto/Sc
 
 import ScheduleController from '@controllers/ScheduleController';
 import ensureAuth, { validateToken } from '@middlewares/ensureAuth';
+import ScheduleFreeController from '@controllers/ScheduleFreeController';
 
 // Add the route in file '_index.ts'
 export default function routes(app: Express) {
@@ -24,6 +25,11 @@ export default function routes(app: Express) {
         '/schedules',
         validateToken(),
         (req, res) => ScheduleController.index(req, res),
+    );
+    app.get(
+        '/schedules/free',
+        validateToken(),
+        (req, res) => ScheduleFreeController.index(req, res),
     );
     app.get(
         '/schedules/:id',

@@ -11,12 +11,6 @@ module.exports = {
             timestamps: true,
             underscored: true,
         },
-        dialectOptions: {
-            ssl: {
-                require: true,
-                rejectUnauthorized: false,
-            },
-        },
     },
     test: {
         username: process.env.DB_TEST_USERNAME,
