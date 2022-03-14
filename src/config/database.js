@@ -11,6 +11,8 @@ module.exports = {
             timestamps: true,
             underscored: true,
         },
+        // Use a different storage. Default: none
+        seederStorage: 'sequelize',
     },
     test: {
         username: process.env.DB_TEST_USERNAME,
@@ -23,12 +25,8 @@ module.exports = {
             timestamps: true,
             underscored: true,
         },
-        dialectOptions: {
-            ssl: {
-                require: true,
-                rejectUnauthorized: false,
-            },
-        },
+        // Use a different storage. Default: none
+        seederStorage: 'sequelize',
     },
     production: {
         username: process.env.DB_PROD_USERNAME,
@@ -40,11 +38,7 @@ module.exports = {
             timestamps: true,
             underscored: true,
         },
-        dialectOptions: {
-            ssl: {
-                require: true,
-                rejectUnauthorized: false,
-            },
-        },
+        // Use a different storage. Default: none
+        seederStorage: 'sequelize',
     },
 };
