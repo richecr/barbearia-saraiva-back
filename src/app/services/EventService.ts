@@ -2,15 +2,24 @@ import moment from 'moment';
 import { Op } from 'sequelize';
 
 import BaseService from './BaseService';
+import AuthService from './AuthService';
 import BaseError from '../errors/BaseError';
+import UpdateEventEmail from '../jobs/UpdateEventEmail';
+
+import User from '@models/User';
+import Schedule from '@models/Schedule';
 import Event, { IEvent } from '@models/Event';
 import EventRepository from '@repositories/EventRepository';
-import AuthService from './AuthService';
-
+import UserRepository from '@repositories/UserRepository';
+import ScheduleRepository from '@repositories/ScheduleRepository';
 
 class EventService extends BaseService<Event, IEvent> {
 
     private authService = AuthService
+    private updateEventEmail = UpdateEventEmail
+    private userRepository = UserRepository
+    private scheduleRepository = ScheduleRepository
+
 
     async validation(body: any, update: boolean = false) {
         let filters: any = {
@@ -93,7 +102,22 @@ class EventService extends BaseService<Event, IEvent> {
         } else {
             modelInstance.set(bodyUpdated);
             modelInstance.save();
+            if (isUserAdmin) {
+                const user = await this.userRepository.findById(modelInstance.user_id);
+                const schedule = await this.scheduleRepository.findById(modelInstance.schedule_id);
+                try {
+                    this.sendEmail(modelInstance, user, schedule);
+                } catch (error) {
+                    console.error("E-mail não enviado! Motivo: ", error)
+                }
+            }
             return modelInstance;
+        }
+    }
+
+    async sendEmail(event: Event, user: User | null, schedule: Schedule | null) {
+        if (user?.notification_email) {
+            await this.updateEventEmail.handle(event, user, schedule);
         }
     }
 }
