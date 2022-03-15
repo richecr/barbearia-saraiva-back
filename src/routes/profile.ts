@@ -11,7 +11,6 @@ export default function routes(app: Express) {
     app.put(
         '/profile',
         validateToken(),
-        validateParamsDTO(UserUpdateAndDelete),
         validateBodyDTO(UserUpdate),
         (req, res) => ProfileController.update(req, res),
     );
@@ -19,11 +18,5 @@ export default function routes(app: Express) {
         '/profile',
         validateToken(),
         (req, res) => ProfileController.get(req, res),
-    );
-    app.delete(
-        '/profile',
-        validateToken(),
-        validateParamsDTO(UserUpdateAndDelete),
-        (req, res) => ProfileController.delete(req, res),
     );
 }

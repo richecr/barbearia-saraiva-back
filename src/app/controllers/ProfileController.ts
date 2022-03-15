@@ -24,12 +24,11 @@ class ProfileController extends BaseController<User, IUser> {
     async update(req: Request, res: Response): Promise<Response<IUser>> {
         try {
             const body = {...req.body, id: Number(req.user.id)};
-            // TODO: adicionar validação no service. Criar um service ProfileService. 
-            const event = await this.service.update(
+            const user = await this.service.update(
                 body.id,
                 body,
             );
-            return res.status(200).json(event);
+            return res.status(200).json(user);
         } catch (error) {
             return res
                 .status((error as BaseError).statusCode)
