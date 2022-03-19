@@ -11,7 +11,7 @@ class UpdateEventEmail {
     async handle(event: Event, user: User, schedule: Schedule | null) {
         await Mail.sendEmail({
             to: `${user.email}`,
-            subject: 'Barbearia Saraiva: Evento alterado',
+            subject: 'Barbearia Saraiva: Evento alterado pelo ADMIN',
             template: 'update_event',
             context: {
                 username: user.name,
