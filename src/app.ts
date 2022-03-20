@@ -35,7 +35,7 @@ class App {
     }
 
     jobScheduleDay() {
-        const job = schedule.scheduleJob({hour: 6, minute: 0, dayOfWeek: [0, 1, 2, 3, 4, 5, 6]}, async function(){
+        const job = schedule.scheduleJob({hour: 6, minute: 0, dayOfWeek: [1, 2, 3, 4, 5, 6]}, async function() {
             await ScheduleToday.handle();
         });
         this.jobs.push(job);

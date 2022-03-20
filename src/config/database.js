@@ -7,6 +7,7 @@ module.exports = {
         database: process.env.DB_DEV_DATABASE,
         host: process.env.DB_DEV_HOST,
         dialect: 'postgres',
+        timezone: '-03:00',
         define: {
             timestamps: true,
             underscored: true,
@@ -20,7 +21,7 @@ module.exports = {
         database: process.env.DB_TEST_DATABASE,
         host: process.env.DB_TEST_HOST,
         dialect: 'postgres',
-        logging: false,
+        timezone: '-03:00',
         define: {
             timestamps: true,
             underscored: true,
@@ -34,6 +35,7 @@ module.exports = {
         database: process.env.DB_PROD_DATABASE,
         host: process.env.DB_PROD_HOST,
         dialect: process.env.DB_DIALECT,
+        timezone: '-03:00',
         define: {
             timestamps: true,
             underscored: true,

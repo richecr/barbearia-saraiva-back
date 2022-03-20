@@ -302,6 +302,11 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
+"@handlebars/allow-prototype-access@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@handlebars/allow-prototype-access/-/allow-prototype-access-1.0.5.tgz#364384d1879765aad210a61becd849afab3954b3"
+  integrity sha512-D5AJO9dM6B+1scVVQ4ma05cAku5M2dEnlycggIg6RW539TdQlgbNg1G1r86fNqqNI0CHv/TVwKEB9M6ILJQCWQ==
+
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@istanbuljs/load-nyc-config/-/load-nyc-config-1.1.0.tgz#fd3db1d59ecf7cf121e80650bb86712f9b55eced"

@@ -12,22 +12,22 @@ class ScheduleToday {
     }
 
     async handle() {
+        const dataWrapper = moment(new Date(), 'YYYY-MM-DD HH:mm:ss').utcOffset("-0300");
+        const dateStart = dataWrapper.startOf("day").format();
+        const dateEnd = dataWrapper.endOf("day").format();
+
         const schedules = await ScheduleService.findAll();
-        schedules.forEach(async schedule => {
-            const date = moment(new Date(), 'YYYY-MM-DD HH:mm:ss +00:00').utcOffset("+0000");
-            const events = await EventService.find({
+        const emailsPromises = schedules.map(async schedule => {
+            let events = await EventService.find({
                 where: {
                     schedule_id: schedule.id,
                     date_hour_start: {
-                        [Op.between]: [
-                            date.startOf("day").format(),
-                            date.endOf("day").format()
-                        ]
+                        [Op.between]: [dateStart, dateEnd]
                     },
                 },
                 include: [{ model: User, as: 'user'}]
             });
-            await Mail.sendEmail({
+            return Mail.sendEmail({
                 to: `${schedule.email}`,
                 subject: 'Barbearia Saraiva: Sua Agenda de Hoje',
                 template: 'schedule_day',
@@ -37,6 +37,7 @@ class ScheduleToday {
                 },
             });
         });
+        await Promise.allSettled(emailsPromises);
     }
 }
 

@@ -1,18 +1,18 @@
 <strong>Olá, {{ barber_name }}</strong>
 <p>Sua agenda para hoje:</p>
 <p>
-    <ul>
+    {{#if (isArrayEmpty events)}}
+        <p>Agenda está vazia para hoje!</p>
+    {{else}}
         {{#each events}}
-        <li>
             <strong>Nome do Usuário: </strong> {{ this.user.name }} <br />
             <strong>Tipo do Serviço: </strong> {{ this.type_service }} <br />
-            <strong>Duração do Serviço: </strong> {{ this.duration_service }} <br />
+            <strong>Duração do Serviço: </strong> {{ timeConvert this.duration_service }} <br />
 
-            <strong>Data e hora de Início: </strong> {{ this.date_hour_start }} <br />
-            <strong>Data e hora de Fim: </strong> {{ this.date_hour_end }} <br />
+            <strong>Data e hora de Início: </strong> {{ formatDate this.date_hour_start }} <br />
+            <strong>Data e hora de Fim: </strong> {{ formatDate this.date_hour_end }} <br />
             
             <p>----------------------</p>
-        </li>
         {{/each}}
-    </ul>
+    {{/if}}
 </p>
