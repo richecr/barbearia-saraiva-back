@@ -1,0 +1,14 @@
+<strong>Olá, {{ barber_name }}</strong>
+<p>Houve uma atualização na sua agenda para hoje:</p>
+<p>
+    {{#each events}}
+        <strong>Nome do Usuário: </strong> {{ this.user.name }} <br />
+        <strong>Tipo do Serviço: </strong> {{ this.type_service }} <br />
+        <strong>Duração do Serviço: </strong> {{ timeConvert this.duration_service }} <br />
+
+        <strong>Data e hora de Início: </strong> {{ formatDate this.date_hour_start }} <br />
+        <strong>Data e hora de Fim: </strong> {{ formatDate this.date_hour_end }} <br />
+        
+        <p>----------------------</p>
+    {{/each}}
+</p>

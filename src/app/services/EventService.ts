@@ -12,6 +12,7 @@ import Event, { IEvent } from '@models/Event';
 import EventRepository from '@repositories/EventRepository';
 import UserRepository from '@repositories/UserRepository';
 import ScheduleRepository from '@repositories/ScheduleRepository';
+import NewUpdateEvent from '../jobs/NewUpdateEvent';
 
 class EventService extends BaseService<Event, IEvent> {
 
@@ -23,6 +24,7 @@ class EventService extends BaseService<Event, IEvent> {
 
     async validation(body: any, update: boolean = false) {
         let filters: any = {
+            schedule_id: body.schedule_id,
             date_hour_start: {
                 [Op.between]: [
                     body.dataWrapper.startOf("day").format(),
@@ -82,6 +84,7 @@ class EventService extends BaseService<Event, IEvent> {
             throw new BaseError("Horário ocupado.", 409);
         } else {
             const event = await this.repository.create(body);
+            NewUpdateEvent.handle(event);
             return event;
         }
     }
@@ -101,7 +104,7 @@ class EventService extends BaseService<Event, IEvent> {
             throw new BaseError("Horário ocupado.", 409);
         } else {
             modelInstance.set(bodyUpdated);
-            modelInstance.save();
+            const event = await modelInstance.save();
             if (isUserAdmin) {
                 const user = await this.userRepository.findById(modelInstance.user_id);
                 const schedule = await this.scheduleRepository.findById(modelInstance.schedule_id);
@@ -111,6 +114,7 @@ class EventService extends BaseService<Event, IEvent> {
                     console.error("E-mail não enviado! Motivo: ", error)
                 }
             }
+            NewUpdateEvent.handle(event);
             return modelInstance;
         }
     }
