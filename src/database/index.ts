@@ -31,7 +31,7 @@ class Database {
     loadModels() {
         fs.readdirSync(basename)
             .filter(
-                (file) => file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.ts',
+                (file) => file.indexOf('.') !== 0 && file !== basename && ['.ts', '.js'].includes(file.slice(-3)),
             )
             .forEach((file) => {
                 // O require foi usado para importar os models dinamicamente.
