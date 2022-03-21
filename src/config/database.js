@@ -40,6 +40,12 @@ module.exports = {
             timestamps: true,
             underscored: true,
         },
+        dialectOptions: {
+            ssl: {
+                require: true,
+                rejectUnauthorized: false,
+            },
+        },
         // Use a different storage. Default: none
         seederStorage: 'sequelize',
     },
