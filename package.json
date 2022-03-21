@@ -23,7 +23,7 @@
         "test:unit": "yarn migrate:test && jest --detectOpenHandles && yarn migrate:undo:all:test",
 
         "build": "yarn clean && tsc",
-        "start": "node dist/src/index.js",
+        "start": "node -r ts-node/register/transpile-only -r tsconfig-paths/register dist/src/index.js",
         "migrate-prod": "yarn sequelize db:migrate --env production",
         "migrate-prod:undo": "yarn sequelize db:migrate:undo --env production",
         "migrate-prod:undo:all": "yarn sequelize db:migrate:undo:all --env production",
