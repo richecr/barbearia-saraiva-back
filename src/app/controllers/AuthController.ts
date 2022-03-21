@@ -19,6 +19,7 @@ class AuthController {
             const tokenData = await this.service.createSession(req.body);
             return res.status(201).json(tokenData);
         } catch (error) {
+            console.log(error);
             return res.status(401).json({ message: 'Email e/ou senha incorretos' });
         }
     }

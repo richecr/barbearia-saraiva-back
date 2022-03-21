@@ -18,6 +18,7 @@ class UserController extends BaseController<User, IUser> {
             const user = await this.service.create(req.body);
             return res.status(201).json(user);
         } catch (error) {
+            console.log(error);
             return res
                 .status((error as BaseError).statusCode || 400)
                 .json({ message: (error as BaseError).message });
