@@ -4,7 +4,7 @@
     "repository": "https://github.com/richecr/barbearia-saraiva-back",
     "author": "Evlav Tech",
     "version": "1.0.0",
-    "engine": {
+    "engines": {
         "yarn": "1.22.17",
         "node": "16.13.2"
     },
