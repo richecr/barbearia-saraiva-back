@@ -7,8 +7,6 @@
     "private": true,
     "scripts": {
         "dev": "nodemon -r tsconfig-paths/register --files src/index.ts",
-        "build": "yarn clean && tsc",
-        "start": "node dist/index.js",
         "migrate": "yarn sequelize db:migrate --env development",
         "migrate:undo": "yarn sequelize db:migrate:undo --env development",
         "migrate:undo:all": "yarn sequelize db:migrate:undo:all --env development",
@@ -18,7 +16,15 @@
         "generate": "yarn plop --plopfile generators/plopfile.js",
         "migrate:test": "yarn sequelize db:migrate --env test",
         "migrate:undo:all:test": "yarn sequelize db:migrate:undo:all --env test",
-        "test:unit": "yarn migrate:test && jest --detectOpenHandles && yarn migrate:undo:all:test"
+        "test:unit": "yarn migrate:test && jest --detectOpenHandles && yarn migrate:undo:all:test",
+
+        "build": "yarn clean && tsc",
+        "start": "node dist/src/index.js",
+        "migrate-prod": "yarn sequelize db:migrate --env production",
+        "migrate-prod:undo": "yarn sequelize db:migrate:undo --env production",
+        "migrate-prod:undo:all": "yarn sequelize db:migrate:undo:all --env production",
+        "seed-prod": "yarn sequelize db:seed:all --env production",
+        "seed-prod:undo:all": "yarn sequelize db:seed:undo:all --env production"
     },
     "devDependencies": {
         "@types/bcrypt": "^5.0.0",
