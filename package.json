@@ -1,9 +1,13 @@
 {
     "name": "barbearia-saraiva-back",
-    "version": "1.0.0",
     "main": "index.js",
     "repository": "https://github.com/richecr/barbearia-saraiva-back",
     "author": "Evlav Tech",
+    "version": "1.0.0",
+    "engine": {
+        "yarn": "1.22.17",
+        "node": "16.13.2"
+    },
     "private": true,
     "scripts": {
         "dev": "nodemon -r tsconfig-paths/register --files src/index.ts",
