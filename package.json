@@ -21,7 +21,7 @@
         "migrate:test": "yarn sequelize db:migrate --env test",
         "migrate:undo:all:test": "yarn sequelize db:migrate:undo:all --env test",
         "test:unit": "yarn migrate:test && jest --detectOpenHandles && yarn migrate:undo:all:test",
-        "copy:templates": "copyfiles -u 1 ./src/app/views/** ./dist/src",
+        "copy:templates": "copyfiles -u 1 \"./src/**/*.hbs\" \"dist/src\"",
         "build": "yarn clean && tsc && yarn copy:templates",
         "start": "TS_NODE_BASEURL=./dist node -r tsconfig-paths/register dist/src/index.js",
         "migrate-prod": "yarn sequelize db:migrate --env production",
