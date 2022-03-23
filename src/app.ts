@@ -21,9 +21,10 @@ class App {
     }
 
     middlewares() {
-        this.server.use(cors());
+        this.server.use(cors({
+            origin: 'barbearia-saraiva.netlify.app'
+        }));
         this.server.use(express.json());
-        this.server.use(cors());
     }
 
     routes() {
