@@ -37,7 +37,8 @@ class App {
     }
 
     jobScheduleDay() {
-        const job = schedule.scheduleJob({hour: 6, minute: 0, dayOfWeek: [1, 2, 3, 4, 5, 6]}, async function() {
+        // send email 6h - Brazil
+        const job = schedule.scheduleJob({hour: 9, minute: 0, dayOfWeek: [1, 2, 3, 4, 5, 6]}, async function() {
             await ScheduleToday.handle();
         });
         this.jobs.push(job);
