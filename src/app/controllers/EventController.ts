@@ -21,9 +21,19 @@ class EventController extends BaseController<Event, IEvent> {
 
     async store(req: Request, res: Response) {
         try {
-            const body = await this.makeBodyCreateAndUpdate(
-                { ...req.body, user_id: req.user.id }
-            );
+            const isUserAdmin = await this.authService.userIsAdmin(req.user.id);
+            let body = {};
+            console.log(isUserAdmin)
+            if (isUserAdmin) {
+                body = await this.makeBodyCreateAndUpdate(
+                    { ...req.body }
+                );
+            } else {
+                console.log("AQIII")
+                body = await this.makeBodyCreateAndUpdate(
+                    { ...req.body, user_id: req.user.id }
+                );
+            }
             const object = await this.service.create(body);
             return res.status(201).json(object);
         } catch (error) {
