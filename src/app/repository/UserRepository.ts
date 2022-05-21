@@ -13,6 +13,12 @@ class UserRepository extends BaseRepository<User, IUser> {
         });
         return objects;
     }
+
+    async incrementNumberServices(id: number) {
+        await this.model.increment({ number_services: +1 }, {
+            where: { id }
+        })
+    }
 }
 
 export default new UserRepository(User);

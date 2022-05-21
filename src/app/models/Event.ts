@@ -9,6 +9,7 @@ export interface IEvent {
     date_hour_start: Date;
     date_hour_end: Date;
     type_service: string;
+    has_discount: number;
     duration_service: number;
 }
 
@@ -16,9 +17,10 @@ class Event extends GenericModel {
     public id!: number;
     public user_id!: number;
     public schedule_id!: number;
-    public date_hour_start!: Date;
     public date_hour_end!: Date;
     public type_service!: string;
+    public has_discount!: number;
+    public date_hour_start!: Date;
     public duration_service!: number;
 
     static associate(models: DB) {
@@ -72,6 +74,10 @@ class Event extends GenericModel {
                 type_service: {
                     type: DataTypes.STRING,
                     allowNull: false,
+                },
+                has_discount: {
+                    type: DataTypes.BOOLEAN,
+                    defaultValue: false,
                 },
                 duration_service: {
                     type: DataTypes.INTEGER,

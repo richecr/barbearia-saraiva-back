@@ -10,6 +10,7 @@ export interface IUser {
     email: string;
     birthday: Date;
     telephone: string;
+    number_services: number;
     notification_email: boolean;
     notification_whatsapp: boolean;
     events: Event[];
@@ -32,6 +33,7 @@ class User extends GenericModel {
     public password!: string;
     public telephone!: string;
     public password_hash!: string;
+    public number_services!: number;
     public notification_email!: boolean;
     public notification_whatsapp!: boolean;
     public events!: Event[];
@@ -76,6 +78,13 @@ class User extends GenericModel {
                 password_hash: {
                     type: DataTypes.STRING,
                 },
+                number_services: {
+                    type: DataTypes.INTEGER,
+                    defaultValue: 0,
+                    validate: {
+                        min: 0,
+                    },
+                }
             },
             {
                 sequelize: connection,

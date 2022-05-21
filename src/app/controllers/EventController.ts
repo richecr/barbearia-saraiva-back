@@ -23,13 +23,11 @@ class EventController extends BaseController<Event, IEvent> {
         try {
             const isUserAdmin = await this.authService.userIsAdmin(req.user.id);
             let body = {};
-            console.log(isUserAdmin)
             if (isUserAdmin) {
                 body = await this.makeBodyCreateAndUpdate(
                     { ...req.body }
                 );
             } else {
-                console.log("AQIII")
                 body = await this.makeBodyCreateAndUpdate(
                     { ...req.body, user_id: req.user.id }
                 );

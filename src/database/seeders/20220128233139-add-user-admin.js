@@ -6,6 +6,7 @@ module.exports = {
                 {
                     id: 1,
                     name: 'User Admin',
+                    number_services: 0,
                     email: process.env.EMAIL_ADMIN,
                     birthday: '1999-05-17T03:00:00.000Z',
                     telephone: '83998412233',

@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import moment from 'moment';
 import { Op } from 'sequelize';
 
@@ -78,11 +79,26 @@ class EventService extends BaseService<Event, IEvent> {
         return error;
     }
 
+    async applyDiscount(body: any) {
+        const user =  await this.userRepository.findById(body.user_id);
+        const userIsAdmin = await this.authService.userIsAdmin(body.user_id);
+        if (!userIsAdmin) {
+            if (user) {
+                const qnt = process.env.QNT_SERVICES_TO_DISCOUNT;
+                if ((user?.number_services + 1) % qnt === 0) {
+                    body.has_discount = true;
+                }
+            }
+        }
+        await this.userRepository.incrementNumberServices(body.user_id);
+    }
+
     async create(body: any): Promise<IEvent | BaseError> {
         const error = await this.validation(body);
         if (error) {
             throw new BaseError("Horário ocupado.", 409);
         } else {
+            await this.applyDiscount(body);
             const event = await this.repository.create(body);
             NewUpdateEvent.handle(event);
             return event;

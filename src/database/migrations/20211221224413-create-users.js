@@ -37,6 +37,10 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.STRING,
             },
+            number_services: {
+                allowNull: false,
+                type: Sequelize.INTEGER,
+            },
             created_at: {
                 type: Sequelize.DATE,
                 allowNull: false,

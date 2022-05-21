@@ -45,6 +45,10 @@ module.exports = {
                 type: Sequelize.INTEGER,
                 allowNull: false,
             },
+            has_discount: {
+                type: Sequelize.BOOLEAN,
+                defaultValue: false,
+            },
             created_at: {
                 type: Sequelize.DATE,
                 allowNull: false,
